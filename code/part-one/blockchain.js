@@ -51,6 +51,7 @@ class Block {
   constructor(transactions, previousHash) {
     // Your code here
     this.transactions = transactions
+    this.previousHash = previousHash
   }
 
   /**
