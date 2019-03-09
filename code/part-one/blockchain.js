@@ -52,6 +52,8 @@ class Block {
     // Your code here
     this.transactions = transactions
     this.previousHash = previousHash
+    this.nonce = 0
+    this.hash = 'test'
   }
 
   /**
@@ -65,7 +67,8 @@ class Block {
    */
   calculateHash(nonce) {
     // Your code here
-
+    let hash = createHash('sha256').update(this.nonce.toString()).digest()
+    return hash
   }
 }
 
