@@ -3,7 +3,6 @@
 const secp256k1 = require('secp256k1');
 const { randomBytes, createHash } = require('crypto');
 
-
 /**
  * A function which generates a new random Secp256k1 private key, returning
  * it as a 64 character hexadecimal string.
@@ -37,8 +36,11 @@ const { randomBytes, createHash } = require('crypto');
  */
 const getPublicKey = privateKey => {
   // Your code here
-
+  let pKey = Buffer.from(privateKey, 'hex')
+  const publicKey = secp256k1.publicKeyCreate(pKey).toString('hex')
+  return publicKey
 };
+
 
 /**
  * A function which takes a hex private key and a string message, returning
