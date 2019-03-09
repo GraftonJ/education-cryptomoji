@@ -13,10 +13,14 @@ const { randomBytes, createHash } = require('crypto');
  *   console.log(privateKey);
  *   // 'e291df3eede7f0c520fddbe5e9e53434ff7ef3c0894ed9d9cbcb6596f1cfe87e'
  */
-const createPrivateKey = () => {
-  // Enter your solution here
-
-};
+ const createPrivateKey = () => {
+   // Enter your solution here
+   let privKey
+   do {
+     privKey = randomBytes(32)
+   } while (!secp256k1.privateKeyVerify(privKey))
+ return privKey.toString('hex')
+ };
 
 /**
  * A function which takes a hexadecimal private key and returns its public pair
