@@ -23,7 +23,12 @@ class Transaction {
    */
   constructor(privateKey, recipient, amount) {
     // Enter your solution here
-
+    this.privateKey = privateKey
+    this.recipient = recipient
+    this.amount = amount
+    this.source = signing.getPublicKey(privateKey)
+    let signedMessage = this.source + recipient + amount
+    this.signature = signing.sign(privateKey, signedMessage)
   }
 }
 
@@ -45,7 +50,7 @@ class Block {
    */
   constructor(transactions, previousHash) {
     // Your code here
-
+    this.transactions = transactions
   }
 
   /**
