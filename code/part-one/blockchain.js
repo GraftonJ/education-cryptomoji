@@ -53,7 +53,6 @@ class Block {
     this.transactions = transactions
     this.previousHash = previousHash
     this.nonce = 0
-    this.hash = 'test'
   }
 
   /**
@@ -66,9 +65,14 @@ class Block {
    *   properties change.
    */
   calculateHash(nonce) {
+    console.log('NONCE IS>>>>', nonce);
+    let sigs = this.transactions.map(sig => sig.signature).join()
+    this.nonce = nonce
+    this.hash = sigs + this.previousHash + this.nonce
     // Your code here
-    let hash = createHash('sha256').update(this.nonce.toString()).digest()
-    return hash
+    let hash = createHash('sha256').update(this.hash).digest()
+    this.hash = hash.toString('hex')
+    return hash.toString('hex')
   }
 }
 
