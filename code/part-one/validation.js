@@ -12,7 +12,12 @@ const signing = require('./signing');
  */
 const isValidTransaction = transaction => {
   // Enter your solution here
+  if(transaction.amount < 0){
+    return false
+  }
+  const message = transaction.source + transaction.recipient + transaction.amount
 
+  return signing.verify(transaction.source, message, transaction.signature)
 };
 
 /**
@@ -23,7 +28,8 @@ const isValidTransaction = transaction => {
  */
 const isValidBlock = block => {
   // Your code here
-
+  const transactionString = block.transactions.map(t => t.signature).join('')
+  const toHash = block.previousHash + transactionString + block.nonce
 };
 
 /**

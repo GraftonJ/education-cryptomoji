@@ -54,7 +54,6 @@ class Block {
     this.previousHash = previousHash
     this.nonce = 0
   }
-
   /**
    * Accepts a nonce, and generates a unique hash for the block. Updates the
    * hash and nonce properties of the block accordingly.
@@ -65,7 +64,6 @@ class Block {
    *   properties change.
    */
   calculateHash(nonce) {
-    console.log('NONCE IS>>>>', nonce);
     let sigs = this.transactions.map(sig => sig.signature).join()
     this.nonce = nonce
     this.hash = sigs + this.previousHash + this.nonce
@@ -92,7 +90,8 @@ class Blockchain {
    */
   constructor() {
     // Your code here
-
+    const genesis = new Block([], null)
+    this.blocks = [ genesis ]
   }
 
   /**
@@ -100,7 +99,7 @@ class Blockchain {
    */
   getHeadBlock() {
     // Your code here
-
+    return this.blocks[this.blocks.length - 1]
   }
 
   /**
@@ -109,7 +108,8 @@ class Blockchain {
    */
   addBlock(transactions) {
     // Your code here
-
+    const block = new Block(transactions, this.getHeadBlock().hash)
+    this.blocks.push(block)
   }
 
   /**
@@ -123,7 +123,17 @@ class Blockchain {
    */
   getBalance(publicKey) {
     // Your code here
-
+    return this.blocks.reduce((balance, block) => {
+      return balance + block.transactions.reduce((sum, transaction) => {
+        if(transaction.recipient === publicKey){
+          return sum + transaction.amount
+        }
+        if(transaction.source === publicKey){
+          return sum - transaction.amount
+        }
+        return sum
+      }, 0)
+    }, 0)
   }
 }
 
